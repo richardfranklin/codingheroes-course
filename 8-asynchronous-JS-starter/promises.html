@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Asynchronous JavaScript</title>
+</head>
+<body>
+    <h1>Asynchronous JavaScript</h1>
+    <script>
+
+        ///////////////////////////////////////////////////////
+        // PROMISES
+
+        // States:
+        //      Pending
+        //      Settled / Resolved
+        //      - Fulfilled or...
+        //      - Rejected
+
+        const getIDs = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([32, 457, 324, 264, 20]);
+            }, 1000)
+        });
+
+        // This is placed in a function because an ID is being passed in
+        const getRecipe = recID => {
+            return new Promise((resolve, reject) => {
+                setTimeout(id => {
+                    const recipe = {
+                        title: 'Fresh tomato pasta',
+                        publisher: 'Jonas'
+                    }
+                    
+                    resolve(`${id}: ${recipe.title}`)
+                }, 1000, recID)
+                
+            });
+        };
+
+        const getRelated = publisher => {
+            return new Promise((resolve, reject) => {
+                setTimeout(pub => {
+                    console.log(pub);
+                    const recipe2 = {
+                        title: 'Italian Pizza',
+                        publisher: 'Jonas'
+                    }
+
+                    resolve(`Related publisher: ${pub}, Recipe: ${recipe2.title}`);
+                }, 1000, publisher);
+            });
+        };
+
+        getIDs
+            .then(IDs => {
+                console.log(IDs);
+                return getRecipe(IDs[2])
+            })
+            .then(recipe => {
+                console.log(recipe);
+                return getRelated('Jonas');
+            })
+            .then(recipe => {
+                console.log(recipe);
+            })
+            .catch(error => {
+                console.log('Error!');
+            });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Asynchronous JavaScript</title>
+</head>
+<body>
+    <h1>Asynchronous JavaScript</h1>
+    <script>
+
+        ///////////////////////////////////////////////////////
+        // FETCH
+
+        // asyn function returns promise, which can be assigned to const later.
+        async function getWeatherAW(woeid) {
+            try {
+                const result = await fetch(`https://cors-proxy.htmldriven.com/?url=https://www.metaweather.com/api/location/${woeid}/`)
+                // const dataZ = await result.json(); // to test catch error
+                const data = await result.json();
+
+                return data;
+
+            } catch(error) {
+                alert(error);
+            }
+        } 
+
+        let dataSF;
+
+        getWeatherAW(2487956).then((resolve, reject) => {
+            dataSF = resolve;
+            console.log(dataSF);
+        });
+
+    </script>
+</body>
+</html>
