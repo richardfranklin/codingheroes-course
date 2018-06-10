@@ -19,7 +19,7 @@ export const highlightSelected = (id) => {
         el.classList.remove('results__link--active');
     })
 
-    document.querySelector(`a[href*="${id}"]`).classList.add('results__link--active');
+    document.querySelector(`.results__link[href*="${id}"]`).classList.add('results__link--active');
 }
 
 // e.g. 'Pasta with tomato and spinach'
@@ -28,7 +28,7 @@ export const highlightSelected = (id) => {
 // acc: 9  -->  acc + cur = 15  --> newTitle = ['Pasta', 'with', 'tomato']
 // acc: 15  -->  acc + cur = 18  --> newTitle = ['Pasta', 'with', 'tomato'] ... word not pushed into title, loop ends
 
-const limitRecipeTitle = (title, limit = 17) => {
+export const limitRecipeTitle = (title, limit = 17) => {
     // const allows for its array to change as this isn't a variable mutation
     const newTitle = [];
 

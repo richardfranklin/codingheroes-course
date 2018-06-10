@@ -11,7 +11,6 @@ export default class Recipe {
     async getRecipe() {
         try {
             const res = await axios(`${PROXY_URL}http://food2fork.com/api/get?key=${API_KEY}&rId=${this.id}`);
-            console.log(res);
             this.title = res.data.recipe.title;
             this.author = res.data.recipe.publisher;
             this.image = res.data.recipe.image_url;
@@ -97,5 +96,18 @@ export default class Recipe {
         });
 
         this.ingredients = newingredients;
+    }
+
+    updateServings(type) {
+        // Servings
+        const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+        
+
+        // ingredients
+        this.ingredients.forEach(ing => {
+            ing.count *= (newServings / this.servings);
+        })
+        
+        this.servings = newServings;
     }
 } 
